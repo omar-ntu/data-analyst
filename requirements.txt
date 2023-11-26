@@ -1,0 +1,5 @@
+openai
+streamlit
+numpy
+yfinance
+base64

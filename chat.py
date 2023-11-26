@@ -84,7 +84,7 @@ col1, col2 = st.columns([1, 4])
 with col1:
     # Make it a chat message to seem like AI is relaying this information
     with st.chat_message(name="Assistant Analyst", avatar="🤖"):
-        st.write("Here are the stock prices of Apple and Microsoft over the past 5 years.")
+        st.success("Here are the stock prices of Apple and Microsoft over the past 5 years.")
         st.markdown("<h2>5 Year Stock Price Histories of Apple and Microsoft</h2>", unsafe_allow_html=True)
 
         # Apple chart

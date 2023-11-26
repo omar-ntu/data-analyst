@@ -74,23 +74,19 @@ apple = yf.Ticker('AAPL').history(period='5y')['Close']
 microsoft = yf.Ticker('MSFT').history(period='5y')['Close']
 tesla = yf.Ticker('TSLA').history(period='5y')['Close']
 amazon = yf.Ticker('AMZN').history(period='5y')['Close']
-snp = yf.Ticker('.INX').history(period='5y')['Close']
-bitcoin = yf.Ticker('COIN').history(period='5y')['Close']
-
-
-# Main Title
-st.markdown("<h1 style='text-align: center;'>Your Personal AI Assistant Analyst by Evooq</h1>", unsafe_allow_html=True)
 
 # Initialising columns. Left column size 1/5, right column size 4/5
-col1, col2 = st.columns([1, 4])
+col1, col2 = st.columns([1, 3])
 
 # Column 1, left side
 with col1:
     # Make it a chat message to seem like AI is relaying this information
     with st.chat_message(name="Assistant Analyst", avatar="🤖"):
-        st.write("Here are the stock prices of Apple and Microsoft over the past 5 years.")
+        st.success("Here are the stock prices of Apple and Microsoft over the past 5 years.")
         st.markdown("<h2>5 Year Stock Price Histories of Apple and Microsoft</h2>", unsafe_allow_html=True)
 
+    sub_col1, sub_col2 = st.columns(2)
+    with sub_col1:
         # Apple chart
         st.markdown("<h3 style='text-align: center;'>Apple</h3>", unsafe_allow_html=True)
         st.line_chart(apple)
@@ -99,26 +95,24 @@ with col1:
         st.markdown("<h3 style='text-align: center;'>Microsoft</h3>", unsafe_allow_html=True)
         st.line_chart(microsoft)
 
-        # TESLA Chart
-        st.markdown("<h3 style='text-align: center;'>Tesla</h3>", unsafe_allow_html=True)
-        st.line_chart(tesla)
-
+    with sub_col2:
         # Amazon Chart
         st.markdown("<h3 style='text-align: center;'>Amazon</h3>", unsafe_allow_html=True)
         st.line_chart(amazon)
 
-        # S&P Chart
-        st.markdown("<h3 style='text-align: center;'>S&P 500</h3>", unsafe_allow_html=True)
-        st.line_chart(snp)
+        # TESLA Chart
+        st.markdown("<h3 style='text-align: center;'>Tesla</h3>", unsafe_allow_html=True)
+        st.line_chart(tesla)
 
-        # BTC Chart
-        st.markdown("<h3 style='text-align: center;'>Bitcon</h3>", unsafe_allow_html=True)
-        st.line_chart(bitcoin)
     
 # Column 2, right side
 with col2:
+    # Main Title
+    st.markdown("<h1 style='text-align: center;'>Your Personal AI Assistant Analyst by Evooq</h1>", unsafe_allow_html=True)
+
     # User input
-    user_input = st.text_input(label='Enter text here, _e.g. "Please tell me the stock price of Apple."_')
+    with st.chat_message(name="user"):
+        user_input = st.text_input(label='Enter text here, _e.g. "Please tell me the stock price of Apple."_')
 
     # Add a Message to a Thread
     message = client.beta.threads.messages.create(
@@ -151,8 +145,6 @@ with col2:
                     thread_id=thread.id
                 )
                 assistant_response = messages.data[0].content[0].text.value
-
-                # Text-to-speech
                 audio_response = client.audio.speech.create(
                     model="tts-1",
                     voice="alloy",

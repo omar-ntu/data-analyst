@@ -72,6 +72,10 @@ thread = client.beta.threads.create()
 # Getting stock histories to plot charts
 apple = yf.Ticker('AAPL').history(period='5y')['Close']
 microsoft = yf.Ticker('MSFT').history(period='5y')['Close']
+tesla = yf.Ticker('TSLA').history(period='5y')['Close']
+amazon = yf.Ticker('AMZN').history(period='5y')['Close']
+snp = yf.Ticker('.INX').history(period='5y')['Close']
+bitcoin = yf.Ticker('COIN').history(period='5y')['Close']
 
 
 # Main Title
@@ -84,7 +88,7 @@ col1, col2 = st.columns([1, 4])
 with col1:
     # Make it a chat message to seem like AI is relaying this information
     with st.chat_message(name="Assistant Analyst", avatar="🤖"):
-        st.success("Here are the stock prices of Apple and Microsoft over the past 5 years.")
+        st.write("Here are the stock prices of Apple and Microsoft over the past 5 years.")
         st.markdown("<h2>5 Year Stock Price Histories of Apple and Microsoft</h2>", unsafe_allow_html=True)
 
         # Apple chart
@@ -94,6 +98,22 @@ with col1:
         # MS Chart
         st.markdown("<h3 style='text-align: center;'>Microsoft</h3>", unsafe_allow_html=True)
         st.line_chart(microsoft)
+
+        # TESLA Chart
+        st.markdown("<h3 style='text-align: center;'>Tesla</h3>", unsafe_allow_html=True)
+        st.line_chart(tesla)
+
+        # Amazon Chart
+        st.markdown("<h3 style='text-align: center;'>Amazon</h3>", unsafe_allow_html=True)
+        st.line_chart(amazon)
+
+        # S&P Chart
+        st.markdown("<h3 style='text-align: center;'>S&P 500</h3>", unsafe_allow_html=True)
+        st.line_chart(snp)
+
+        # BTC Chart
+        st.markdown("<h3 style='text-align: center;'>Bitcon</h3>", unsafe_allow_html=True)
+        st.line_chart(bitcoin)
     
 # Column 2, right side
 with col2:
@@ -131,6 +151,8 @@ with col2:
                     thread_id=thread.id
                 )
                 assistant_response = messages.data[0].content[0].text.value
+
+                # Text-to-speech
                 audio_response = client.audio.speech.create(
                     model="tts-1",
                     voice="alloy",
@@ -142,11 +164,6 @@ with col2:
 
                 time.sleep(1)
                 autoplay_audio("output.mp3")
-
-                # Loop through messages and print content
-                # for msg in messages.data:
-                #     content = msg.content[0].text.value
-                #     st.success(content)
 
                 break
 
@@ -179,7 +196,3 @@ with col2:
             
             else:
                 time.sleep(0)
-
-
-
-

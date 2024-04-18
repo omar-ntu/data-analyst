@@ -125,7 +125,7 @@ with col2:
     run = client.beta.threads.runs.create(
         thread_id=thread.id,
         assistant_id=st.secrets["assistant_id"],
-        instructions="Address the user as Omar. If there is no message from Omar, greet and welcome him to Evooq."
+        instructions="Address the user as Omar. If there is no message from Omar, greet him."
     )
 
     print(run.model_dump_json(indent=4))
